@@ -7,32 +7,24 @@ class Oware(TwoPlayerGame):
         for i, player in enumerate(players):
             player.score = 0
         self.players = players
-        self.board = np.array([4] * 6 + [4] * 6)  # Początkowy stan planszy
-        self.current_player = 2  # Gracz 1 rozpoczyna
+        self.board = np.array([4] * 12)
+        self.current_player = 1
 
     def possible_moves(self):
+        moves = []
         if self.current_player == 1:
-            valid_moves = [i for i in range(6) if self.board[i] != 0]
-            if max(self.board[:6]) == 0:
-                return ['none']
-            return valid_moves
-        else:
-            valid_moves = [i for i in range(6, 12) if self.board[i] != 0]
             if max(self.board[6:12]) == 0:
-                return ['none']
-
-            # Filtruj ruchy przeciwnika, aby wybrać te, które umożliwią graczowi 1 wykonanie ruchu
-            opponent_valid_moves = [i for i in range(6) if self.board[i] >= (6 - i)]
-            return opponent_valid_moves if opponent_valid_moves else valid_moves
+                moves = [i for i in range(6) if self.board[i] >= (6 - i)]
+            if not moves:
+                moves = [i for i in range(6) if self.board[i] != 0]
+        else:
+            if max(self.board[:6]) == 0:
+                moves = [i for i in range(6, 12) if self.board[i] >= (6 - (i % 6))]
+            if not moves:
+                moves = [i for i in range(6, 12) if self.board[i] != 0]
+        return moves
 
     def make_move(self, move):
-        if move == 'none':
-            if self.current_player == 1:
-                self.players[1].score += sum(self.board[0:6])
-            else:
-                self.players[0].score += sum(self.board[6:12])
-            return
-
         move = int(move)
         seeds_to_sow = self.board[move]
         self.board[move] = 0
@@ -45,6 +37,10 @@ class Oware(TwoPlayerGame):
                 seeds_to_sow -= 1
 
         self.collect_seeds(current_position)
+        start_index = (self.opponent_index - 1) * 6
+        if max(self.board[start_index: start_index + 6]) == 0:
+            self.players[self.current_player - 1].score += sum(
+                self.board[(self.current_player - 1) * 6: (self.current_player - 1) * 6 + 6])
 
     def collect_seeds(self, position):
         if self.current_player == 1 and 6 <= position <= 11 and self.board[position] in [2, 3]:
@@ -62,10 +58,12 @@ class Oware(TwoPlayerGame):
         return self.opponent.score > 24
 
     def is_over(self):
-        return self.lose() or sum(self.board) < 7
+        return self.lose() or sum(self.board) < 7 or (
+                (max(self.board[:6]) == 0 and self.current_player == 1)
+                or (max(self.board[6:12]) == 0 and self.current_player == 2))
 
     def scoring(self):
-        return 48 - self.opponent_index
+        return 48 - self.players[self.opponent_index - 1].score
 
     def show(self):
         print("Plansza:")
@@ -74,13 +72,14 @@ class Oware(TwoPlayerGame):
 
 
 if __name__ == "__main__":
-    ai_algo = Negamax(6)  # Algorytm AI (zmień głębokość według potrzeb)
-    game = Oware([AI_Player(ai_algo), AI_Player(ai_algo)])
+    ai_algo = Negamax(6)
+    ai_algo2 = Negamax(6)
+    game = Oware([AI_Player(ai_algo), AI_Player(ai_algo2)])
 
     game.play()
     if game.players[0].score > game.players[1].score:
-        print("Gracz", game.current_player, "wins.")
+        print("Gracz 1 wygrywa.")
     elif game.players[0].score < game.players[1].score:
-        print("Gracz", game.opponent_index, "wins.")
+        print("Gracz 2 wygrywa.")
     else:
         print("Remis")
