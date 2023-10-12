@@ -1,9 +1,9 @@
-#Gra Oware
+# Gra Oware
 
-##Autorzy: 
+## Autorzy: 
   Kacper Stankiewicz, Mikołaj Prętki
   
-##Instrukcja przygotowania środowiska:
+## Instrukcja przygotowania środowiska:
   Należy zainstalować na sowim komputerze pythona
     Windows: https://docs.python.org/3/using/windows.html
     Mac: https://docs.python.org/3/using/mac.html
@@ -12,7 +12,7 @@
 
   Należy również zainstalować paczkę numpy (https://numpy.org/install/), oraz easyAI (https://zulko.github.io/easyAI/installation.html)
 
-##Zasady gry: 
+## Zasady gry: 
   Oware rozgrywane jest na płaszczyźnie składającej się z dwóch rzędów zawierających po sześć wgłębień.
   Przygotowując się do gry umieszczamy cztery nasiona w każdym z dwunastu wgłębień planszy. Celem gry jest schwytanie większej liczby nasion niż przeciwnik.
   W swej turze gracz wybiera jedno z wypełnionych wgłębień w rzędzie przed sobą i wyjmuje z niego wszystkie obecne tam nasiona. 
