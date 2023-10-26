@@ -68,9 +68,10 @@ mass['średni'] = fuzz.trimf(mass.universe, [1.0, 3.0, 4.5])
 mass['ciężki'] = fuzz.trimf(mass.universe, [3.0,40.0,40.0])
 
 throttle.automf(names=['zamknięta', 'lekko otwarta', 'średnio otwarta', 'mocno otwarta'])
-
+# nadpisanie wartości MF dla przepustnicy zamkniętej
 throttle['zamknięta'] = fuzz.trapmf(throttle.universe, [0, 0, 5, 33])
 
+# wyświetlenie wykresów
 distance.view()
 velocity.view()
 mass.view()
