@@ -3,16 +3,16 @@ import json
 import numpy as np
 
 
-def build_arg_parser():
+def argsParser():
     parser = argparse.ArgumentParser(description='Compute similarity score')
     parser.add_argument('--target', dest='targetUser', required=False,
                         help='Target user')
-    parser.add_argument("--score-type", dest="score_type", required=False,
+    parser.add_argument("--score-type", dest="scoreType", required=False,
                         choices=['Euclidean', 'Pearson'], help='Similarity metric to be used')
     return parser
 
 
-def euclidean_score(dataset, user1, user2):
+def euclideanScore(dataset, user1, user2):
     common_movies = {}
 
     for item in dataset[user1]:
@@ -31,7 +31,7 @@ def euclidean_score(dataset, user1, user2):
     return 1 / (1 + np.sqrt(np.sum(squared_diff)))
 
 
-def pearson_score(dataset, user1, user2):
+def pearsonScore(dataset, user1, user2):
     common_movies = {}
 
     for item in dataset[user1]:
@@ -61,7 +61,7 @@ def pearson_score(dataset, user1, user2):
     return Sxy / np.sqrt(Sxx * Syy)
 
 
-def calucate_scores(dataset, targetUser, correlation_method):
+def calculateScores(dataset, targetUser, correlation_method):
     if targetUser not in dataset:
         raise TypeError('Cannot find ' + user1 + ' in the dataset')
 
@@ -72,7 +72,7 @@ def calucate_scores(dataset, targetUser, correlation_method):
     return sorted(scores.items(), key=lambda x: x[1], reverse=True)
 
 
-def get_recommendations(dataset, scores, targetUser):
+def getRecommendations(dataset, scores, targetUser):
     recommendations = []
     for elem in scores:
         neighbour = elem[0]
@@ -85,7 +85,7 @@ def get_recommendations(dataset, scores, targetUser):
                     return recommendations
 
 
-def get_anti_recommendations(dataset, scores, targetUser):
+def getAntiRecommendations(dataset, scores, targetUser):
     anti_recommendations = []
     for elem in scores:
         neighbour = elem[0]
@@ -99,7 +99,7 @@ def get_anti_recommendations(dataset, scores, targetUser):
 
 
 if __name__ == '__main__':
-    args = build_arg_parser().parse_args()
+    args = argsParser().parse_args()
     targetUser = args.targetUser
     score_type = args.score_type
 
@@ -109,11 +109,11 @@ if __name__ == '__main__':
         data = json.loads(f.read())
 
     if score_type == 'Euclidean':
-        scores = calucate_scores(data, targetUser, euclidean_score)
+        scores = calculateScores(data, targetUser, euclideanScore)
     else:
-        scores = calucate_scores(data, targetUser, pearson_score)
+        scores = calculateScores(data, targetUser, pearsonScore)
 
     print("TOP 5 movies to watch:")
-    print(get_recommendations(data, scores, targetUser))
+    print(getRecommendations(data, scores, targetUser))
     print("TOP 5 movies NOT to watch:")
-    print(get_anti_recommendations(data, scores, targetUser))
+    print(getAntiRecommendations(data, scores, targetUser))
