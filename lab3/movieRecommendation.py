@@ -1,13 +1,17 @@
 import argparse
 import json
 import numpy as np
+from tmdbv3api import TMDb
+from tmdbv3api import Movie
+import os
+from unidecode import unidecode
 
 
 def argsParser():
     parser = argparse.ArgumentParser(description='Compute similarity score')
-    parser.add_argument('--target', dest='targetUser', required=False,
+    parser.add_argument('--target', dest='targetUser', required=True,
                         help='Target user')
-    parser.add_argument("--score-type", dest="scoreType", required=False,
+    parser.add_argument("--score-type", dest="scoreType", required=True,
                         choices=['Euclidean', 'Pearson'], help='Similarity metric to be used')
     return parser
 
@@ -101,19 +105,34 @@ def getAntiRecommendations(dataset, scores, targetUser):
 if __name__ == '__main__':
     args = argsParser().parse_args()
     targetUser = args.targetUser
-    score_type = args.score_type
-
+    scoreType = args.scoreType
     ratings_file = './data/ratings.json'
 
     with open(ratings_file, 'r', encoding='utf-8') as f:
         data = json.loads(f.read())
 
-    if score_type == 'Euclidean':
+    if scoreType == 'Euclidean':
         scores = calculateScores(data, targetUser, euclideanScore)
     else:
         scores = calculateScores(data, targetUser, pearsonScore)
 
-    print("TOP 5 movies to watch:")
-    print(getRecommendations(data, scores, targetUser))
-    print("TOP 5 movies NOT to watch:")
-    print(getAntiRecommendations(data, scores, targetUser))
+    recommendations = getRecommendations(data, scores, targetUser)
+    antiRecommendations = getAntiRecommendations(data, scores, targetUser)
+
+    tmdb = TMDb()
+    tmdb.api_key = os.environ.get('TMDB_SECRET')
+
+    movie = Movie()
+    print(f"TOP 5 movies {targetUser} should watch:")
+    for title in recommendations:
+        m = movie.search(unidecode(title))
+        if len(m['results']) > 0:
+            print(m[0].title)
+            print("\t" + m[0].overview)
+
+    print(f"\nTOP 5 movies {targetUser} should NOT watch:")
+    for title in antiRecommendations:
+        m = movie.search(unidecode(title))
+        if len(m['results']) > 0:
+            print(m[0].title)
+            print("\t" + m[0].overview)
