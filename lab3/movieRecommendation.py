@@ -1,3 +1,32 @@
+"""
+Problem:
+Na podstawie mojej oceny filmów chciałbym dostać 5 rekomendacji filmów które powinienem obejrzeć (powinny mi się spodobać), oraz 5
+których nie powinienem oglądać (raczej mi się nie spodobają)
+
+Autor:
+Kacper Stankiewicz
+
+============================
+=Silnik rekomendacji filmów=
+============================
+
+Aby uruchomić program należy zainstalować następujące biblioteki
+pip install numpy
+pip install tmdbv3api
+pip install unidecode
+
+Należy również uzyskać klucz dostępowy do API TMDB https://developer.themoviedb.org/reference/intro/getting-started
+Jego wartość umieścić w zmiennej środowiskowej o nazwie TMDB_SECRET
+
+Silnik uruchamiamy poprzez wywołanie komendy w konsoli z parametrami:
+- target : imie i nazwisko użytkownika dla którego chcemy uzyskac rekomendacje
+- score-type : metryka podobieństwa która ma być użyta [Euclidean,Pearson]
+
+Przykładowe wywołanie:
+ python .\movieRecommendation.py --target 'Paweł Czapiewski' --score-type 'Pearson'
+
+"""
+
 import argparse
 import json
 import numpy as np
@@ -8,6 +37,14 @@ from unidecode import unidecode
 
 
 def argsParser():
+    """
+    Funkcja służąca do zadeklarowania wymaganych argumentów, oraz
+    wyciągania wartości z tych argumentów podanych na wejściu przez użytkownika
+
+    Zdefiniowane są 2 argumenty:
+        - targetUser
+        - scoreType
+    """
     parser = argparse.ArgumentParser(description='Compute similarity score')
     parser.add_argument('--target', dest='targetUser', required=True,
                         help='Target user')
@@ -17,6 +54,13 @@ def argsParser():
 
 
 def euclideanScore(dataset, user1, user2):
+    """
+    Funkcja licząca współczynnik podobieństwa metrykją Euklidesową
+    :param dataset (dictionary): oceny filmów wszystkich osób
+    :param user1 (dictionary): oceny filmów użytkownika pierwszego
+    :param user2 (dictionary): oceny filmów użytkownika drugiego
+    :return: (float) współczynnik podobieństwa z zakresu 0 - 1.0
+    """
     common_movies = {}
 
     for item in dataset[user1]:
@@ -36,6 +80,13 @@ def euclideanScore(dataset, user1, user2):
 
 
 def pearsonScore(dataset, user1, user2):
+    """
+    Funkcja licząca współczynnik podobieństwa metryką Pearson'a
+    :param dataset (dictionary): oceny filmów wszystkich osób
+    :param user1 (dictionary): oceny filmów użytkownika pierwszego
+    :param user2 (dictionary): oceny filmów użytkownika drugiego
+    :return: (float) współczynnik podobieństwa z zakresu 0 - 2.0
+    """
     common_movies = {}
 
     for item in dataset[user1]:
@@ -62,10 +113,17 @@ def pearsonScore(dataset, user1, user2):
     if Sxx * Syy == 0:
         return 0
 
-    return Sxy / np.sqrt(Sxx * Syy)
+    return 1 - (Sxy / np.sqrt(Sxx * Syy))
 
 
 def calculateScores(dataset, targetUser, correlation_method):
+    """
+    Funkcja sterująca. Oblicza współczynniki podobieństwa dla danego użytkownika, oraz sortuje wyniki od największego
+    :param dataset (dictionary): oceny filmów wszystkich osób
+    :param targetUser (dictionary): oceny filmów użytkownika dla którego chcemy poznać rekomendacje
+    :param correlation_method: funkcja licząca współczynnik [pearsonScore,euclideanScore]
+    :return: posortowana tablica zawierająca imię i nazwisko osoby, oraz policzony współczynnik
+    """
     if targetUser not in dataset:
         raise TypeError('Cannot find ' + user1 + ' in the dataset')
 
@@ -77,6 +135,13 @@ def calculateScores(dataset, targetUser, correlation_method):
 
 
 def getRecommendations(dataset, scores, targetUser):
+    """
+    Funkcja wybierająca filmy na podstawie ocen najlepiej dopasowanych użytkowników do celu (osoby)
+    :param dataset: oceny filmów wszystkich osób
+    :param scores: tablica zawierająca imię i nazwisko osoby, oraz policzony współczynnik
+    :param targetUser: oceny filmów użytkownika dla którego chcemy poznać rekomendacje
+    :return: 5 tytułów filmowych (polecanych)
+    """
     recommendations = []
     for elem in scores:
         neighbour = elem[0]
@@ -90,6 +155,13 @@ def getRecommendations(dataset, scores, targetUser):
 
 
 def getAntiRecommendations(dataset, scores, targetUser):
+    """
+    Funkcja wybierająca filmy na podstawie ocen najlepiej dopasowanych użytkowników do celu (osoby)
+    :param dataset: oceny filmów wszystkich osób
+    :param scores: tablica zawierająca imię i nazwisko osoby, oraz policzony współczynnik
+    :param targetUser: oceny filmów użytkownika dla którego chcemy poznać rekomendacje
+    :return: 5 tytułów filmowych (niepolecanych)
+    """
     anti_recommendations = []
     for elem in scores:
         neighbour = elem[0]
@@ -100,6 +172,23 @@ def getAntiRecommendations(dataset, scores, targetUser):
                 anti_recommendations.append(movie)
                 if len(anti_recommendations) == 5:
                     return anti_recommendations
+
+
+def printMovies(movies):
+    """
+    Funkcja wyświetlająca oryginalne tytuły filmów wraz z krótkikm opisem z The Movie DB
+    :param movies: tytuły filmów
+    :return: void
+    """
+    tmdb = TMDb()
+    tmdb.api_key = os.environ.get('TMDB_SECRET')
+    movie = Movie()
+    for title in movies:
+        m = movie.search(unidecode(title))
+        if len(m['results']) > 0:
+            print(m[0].title)
+            print("\t" + m[0].overview)
+            print("-----------------------")
 
 
 if __name__ == '__main__':
@@ -119,20 +208,7 @@ if __name__ == '__main__':
     recommendations = getRecommendations(data, scores, targetUser)
     antiRecommendations = getAntiRecommendations(data, scores, targetUser)
 
-    tmdb = TMDb()
-    tmdb.api_key = os.environ.get('TMDB_SECRET')
-
-    movie = Movie()
     print(f"TOP 5 movies {targetUser} should watch:")
-    for title in recommendations:
-        m = movie.search(unidecode(title))
-        if len(m['results']) > 0:
-            print(m[0].title)
-            print("\t" + m[0].overview)
-
+    printMovies(recommendations)
     print(f"\nTOP 5 movies {targetUser} should NOT watch:")
-    for title in antiRecommendations:
-        m = movie.search(unidecode(title))
-        if len(m['results']) > 0:
-            print(m[0].title)
-            print("\t" + m[0].overview)
+    printMovies(antiRecommendations)
