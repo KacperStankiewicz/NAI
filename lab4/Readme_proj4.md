@@ -12,6 +12,8 @@ pip install sklearn
 pip install seaborn
 pip install pandas
 '''
+# Airlines Delay problem : 
+     Try to predict whether a given flight will be delayed, given the information of the scheduled departure.
 
 Ailrines Delay DTree
 
@@ -22,6 +24,8 @@ Airlines Delay SVM
 ![img_3.png](img_3.png)
 ![img_2.png](img_2.png)
 
+# Pima indians problem : 
+      Given medical data, try to predict whether a person has diabetes or not
 Pima Indians Diabetes DTree
 
 ![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/0b1038ae-54d4-47c6-8272-2bde2cc1f36e)
