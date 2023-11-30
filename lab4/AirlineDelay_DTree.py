@@ -1,3 +1,16 @@
+'''
+Authors:
+Rutkowski Marcin s12497
+Stankiewicz Kacper s22619
+
+Environment preparation:
+pip install numpy
+pip install matplotlib
+pip install sklearn
+pip install seaborn
+pip install pandas
+'''
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
