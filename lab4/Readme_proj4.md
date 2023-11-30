@@ -20,3 +20,8 @@ Pima Indians Diabetes DTree
 
 Pima Indians Diabetes SVM
 
+![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/5f7cb22a-0dea-4152-a5a3-c5a6c67e986f)
+
+![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/31612d0b-eb1f-47f0-83ce-0bffcba5c1ee)
+
+![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/5badafb3-e45f-4bff-8037-b623b2277e60)
