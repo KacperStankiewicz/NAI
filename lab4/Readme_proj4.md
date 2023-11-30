@@ -1,5 +1,18 @@
 NAI Projekt 4
 
+'''
+Authors:
+Rutkowski Marcin s12497
+Stankiewicz Kacper s22619
+
+Environment preparation:
+pip install numpy
+pip install matplotlib
+pip install sklearn
+pip install seaborn
+pip install pandas
+'''
+
 Ailrines Delay DTree
 
 ![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/b573d9d8-f04e-4a67-82d7-487d77d9ecaf)
