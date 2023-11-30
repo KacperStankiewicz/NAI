@@ -2,8 +2,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.svm import LinearSVC
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, ConfusionMatrixDisplay, confusion_matrix
 from sklearn.pipeline import make_pipeline
+import matplotlib.pyplot as plt
 import datetime
 
 ts = datetime.datetime.now()
@@ -13,7 +14,7 @@ data = pd.read_csv('data/airlines_delay.csv')
 
 # Preprocess the data: Convert categorical variables to numerical
 encoder = OneHotEncoder(sparse_output=False)
-categorical_columns = ['Airline', 'AirportFrom', 'AirportTo']  # Add other categorical columns if necessary
+categorical_columns = ['Airline', 'AirportFrom', 'AirportTo']
 encoded_cats = encoder.fit_transform(data[categorical_columns])
 
 # Create a new DataFrame with the encoded variables
@@ -46,3 +47,9 @@ print("\nLinearSVC performance on training dataset\n")
 print(classification_report(y_train, y_train_pred))
 print("\nLinearSVC performance on test dataset\n")
 print(classification_report(y_test, y_test_pred))
+
+# Confusion matrix
+cm = confusion_matrix(y_test, y_test_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+disp.plot()
+plt.show()

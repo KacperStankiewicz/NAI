@@ -10,7 +10,7 @@ data = pd.read_csv('data/airlines_delay.csv')
 
 # Preprocess the data: Convert categorical variables to numerical
 encoder = OneHotEncoder(sparse_output=False)
-categorical_columns = ['Airline', 'AirportFrom', 'AirportTo']  # Add other categorical columns if necessary
+categorical_columns = ['Airline', 'AirportFrom', 'AirportTo']
 encoded_cats = encoder.fit_transform(data[categorical_columns])
 
 # Create a new DataFrame with the encoded variables

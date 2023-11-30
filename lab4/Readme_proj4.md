@@ -19,11 +19,10 @@ Ailrines Delay DTree
 
 Airlines Delay SVM
 
-![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/918de9f1-5e48-4fe8-934a-50e1939d6968)
+![img_3.png](img_3.png)
+![img_2.png](img_2.png)
 
 Pima Indians Diabetes DTree
-
-![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/2e1de639-1ae8-4e4b-9994-63a53ec22f04)
 
 ![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/0b1038ae-54d4-47c6-8272-2bde2cc1f36e)
 
@@ -33,8 +32,6 @@ Pima Indians Diabetes DTree
 
 Pima Indians Diabetes SVM
 
-![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/5f7cb22a-0dea-4152-a5a3-c5a6c67e986f)
+![img.png](img.png)
 
-![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/31612d0b-eb1f-47f0-83ce-0bffcba5c1ee)
-
-![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/5badafb3-e45f-4bff-8037-b623b2277e60)
+![img_1.png](img_1.png)
