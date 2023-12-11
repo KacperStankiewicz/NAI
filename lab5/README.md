@@ -1,4 +1,4 @@
-Autorzy projektu:
+Autorzy projektu:\n
 	Rutkowski Marcin - s12497
 	Stankiewicz Kacper - s22619
 
