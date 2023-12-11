@@ -1,15 +1,14 @@
-'''
 Autorzy projektu:
-Rutkowski Marcin - s12497
-Stankiewicz Kacper - s22619
+	Rutkowski Marcin - s12497
+	Stankiewicz Kacper - s22619
 
 Przygotowanie środowiska: 
-pip install tensorflow
-pip install numpy 
-pip install matplotlib 
-pip install sklearn 
-pip install pandas
-'''
+	pip install tensorflow
+	pip install numpy 
+	pip install matplotlib 
+	pip install sklearn 
+	pip install pandas
+
 
 Trenowanie sieci na danych dot. opóźnień linii lotniczych:
 
