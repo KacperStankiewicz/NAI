@@ -27,15 +27,15 @@ model = tf.keras.Sequential([
 ])
 
 '''Kompilacja modelu'''
-model.compile(optimizer='adam', loss='mean_squared_error')
+model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
 
 '''Trenowanie modelu'''
 model.fit(X_train, Y_train, epochs=10, batch_size=32, validation_split=0.2)
 
 '''Ocena modelu na zestawie testowym'''
-loss = model.evaluate(X_test, Y_test)
+loss, acc = model.evaluate(X_test, Y_test)
 print(f'Loss (MSE) on test data: {loss}')
+print(f'Accuracy on test data: {acc}')
 
 '''Przewidywanie na podstawie modelu'''
 predictions = model.predict(X_test)
-

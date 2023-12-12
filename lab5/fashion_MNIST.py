@@ -1,9 +1,9 @@
 import datetime
 
+import matplotlib.pyplot as plt
 import tensorflow as tf
 from keras.datasets import fashion_mnist
 from keras.losses import SparseCategoricalCrossentropy
-import matplotlib.pyplot as plt
 from keras.optimizers import Adam
 
 logdir = "./logs/fashion" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "_big"
@@ -68,14 +68,16 @@ def define_bigger_model():
     return model
 
 
-(train_images, train_labels), (test_images, test_labels) = load_data(True)
+(train_images, train_labels), (test_images, test_labels) = load_data()
 
 train_images, test_images = normalize_pixels(train_images, test_images)
 
 model = define_bigger_model()
 
-model.fit(train_images, train_labels, epochs=10, validation_split=0.2, callbacks=tensorboard_callback)
+model.fit(train_images, train_labels, epochs=5, validation_split=0.2, callbacks=tensorboard_callback)
 
 _, acc = model.evaluate(test_images, test_labels)
 
 print(acc)
+
+predictions = model.predict(test_images)
