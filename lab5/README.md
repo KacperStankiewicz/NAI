@@ -24,3 +24,4 @@ Wykonanie programu
 
 ![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/6e0f9cb2-d2c4-41cd-b322-d21e91fae1c5)
 
+![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/a182a005-5106-4ce3-8d6a-0c63ad0b4479)
