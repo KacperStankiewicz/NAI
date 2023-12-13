@@ -57,4 +57,4 @@ Przekształcenie predykcji na postać binarną
 (1 jeśli wartość > 0.5, w przeciwnym razie 0)
 '''
 mapped_array = [[1 if elem > 0.5 else 0 for elem in inner_list] for inner_list in predictions]
-print(mapped_array)
+print(*mapped_array, sep = '\n')
