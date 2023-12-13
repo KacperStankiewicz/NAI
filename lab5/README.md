@@ -1,8 +1,8 @@
-Autorzy projektu:
-	Rutkowski Marcin - s12497
-	Stankiewicz Kacper - s22619
+# Autorzy projektu:
+## Rutkowski Marcin - s12497
+## Stankiewicz Kacper - s22619
 
-Przygotowanie środowiska: 
+## Przygotowanie środowiska: 
 	pip install tensorflow
 	pip install numpy 
 	pip install matplotlib 
@@ -10,17 +10,15 @@ Przygotowanie środowiska:
 	pip install pandas
 
 
-Trenowanie sieci na danych dot. opóźnień linii lotniczych:
+## Trenowanie sieci na danych dot. opóźnień linii lotniczych:
 
 ![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/faf1a2d0-f050-4277-8413-4c85cacfb86a)
+### Confussion matrix
+![img_4.png](img_4.png)
 
-CIFAR10
+## CIFAR10
 
-Pobieranie danych 
-
-![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/66b51bc4-491f-4bff-968e-e72b5224c0cb)
-
-Wykonanie programu
+### Wykonanie programu
 
 ![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/6e0f9cb2-d2c4-41cd-b322-d21e91fae1c5)
 
@@ -28,20 +26,18 @@ Wykonanie programu
 
 ![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/c61186fd-7514-45dd-8054-1bcfb71b6bec)
 
+## MNIST
 
-MINST
+### Wykonanie programu
+#### mniejsza sieć
+![img_3.png](img_3.png)
+![img_2.png](img_2.png)
+#### większa sieć
+![img.png](img.png) ![img_1.png](img_1.png)
 
-Pobieranie danych
+## Full adder
 
-![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/92084078-1121-4093-9bad-4066d6b15be3)
-
-Wykonanie programu
-
-![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/7d4c8d70-c8e4-424f-a95a-b9314d3a0660)
-
-Full adder
-
-Wykonanie 
+### Wykonanie 
 
 Pierwsze 10 epok 
 

@@ -1,3 +1,11 @@
+"""
+Autorzy
+Rutkowski Marcin - s12497
+Stankiewicz Kacper - s22619
+
+Rozpoznawanie ubrań na podstawie zdjęć
+"""
+
 import datetime
 
 import matplotlib.pyplot as plt
@@ -6,21 +14,9 @@ from keras.datasets import fashion_mnist
 from keras.losses import SparseCategoricalCrossentropy
 from keras.optimizers import Adam
 
-''' Utworzenie unikalnego katalogu dla logów TensorBoard '''
-logdir = "./logs/fashion" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "_big"
-
-''' Inicjalizacja callbacku TensorBoard do monitorowania procesu uczenia '''
-tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
-
-class_names = []
-
 ''' Definicja funkcji do ładowania danych Fashion MNIST '''
 def load_data(verbose=False):
     (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
-    
-    ''' Definicja nazw klas dla zbioru danych Fashion MNIST '''
-    class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
-                   'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
     ''' Opcjonalne wyświetlenie pierwszego obrazu ze zbioru treningowego '''
     if verbose:
@@ -79,7 +75,7 @@ def define_bigger_model():
 Uruchomienie funkcji:
 1. Ładowanie danych MNIST
 2. Normalizacja pikseli
-3. Definiowanie i kompilacja większego modelu
+3. Definiowanie i kompilacja modelu
 4. Trenowanie modelu
 5. Ewaluacja modelu na danych testowych
 6. Wyświetlenie dokładności modelu
@@ -89,9 +85,9 @@ Uruchomienie funkcji:
 
 train_images, test_images = normalize_pixels(train_images, test_images)
 
-model = define_bigger_model()
+model = define_model()
 
-model.fit(train_images, train_labels, epochs=5, validation_split=0.2, callbacks=tensorboard_callback)
+model.fit(train_images, train_labels, epochs=5, validation_split=0.2)
 
 _, acc = model.evaluate(test_images, test_labels)
 

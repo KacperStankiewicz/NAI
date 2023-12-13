@@ -1,5 +1,15 @@
-import tensorflow as tf
+"""
+Autorzy
+Rutkowski Marcin - s12497
+Stankiewicz Kacper - s22619
+
+Predykcja opóźnienia lotu
+"""
+
 import pandas as pd
+import tensorflow as tf
+from matplotlib import pyplot as plt
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
@@ -30,12 +40,18 @@ model = tf.keras.Sequential([
 model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
 
 '''Trenowanie modelu'''
-model.fit(X_train, Y_train, epochs=10, batch_size=32, validation_split=0.2)
+model.fit(X_train, Y_train, epochs=10, batch_size=64, validation_split=0.2)
 
 '''Ocena modelu na zestawie testowym'''
-loss, acc = model.evaluate(X_test, Y_test)
-print(f'Loss (MSE) on test data: {loss}')
+_, acc = model.evaluate(X_test, Y_test)
 print(f'Accuracy on test data: {acc}')
 
 '''Przewidywanie na podstawie modelu'''
 predictions = model.predict(X_test)
+
+rounded_predictions = tf.round(predictions)
+
+cm = confusion_matrix(Y_test, rounded_predictions)
+disp = ConfusionMatrixDisplay(cm)
+disp.plot()
+plt.show()

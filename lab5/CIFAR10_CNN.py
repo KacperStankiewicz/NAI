@@ -1,19 +1,17 @@
-import datetime
-import fileinput
+"""
+Autorzy
+Rutkowski Marcin - s12497
+Stankiewicz Kacper - s22619
 
-import tensorflow as tf
-from matplotlib import pyplot
+ROzpoznawanie zwierząt na podstawie zdjęć
+"""
+
 from keras.datasets import cifar10
-from keras.utils import to_categorical
-from keras.models import Sequential
 from keras.layers import Dropout, Conv2D, MaxPooling2D, Dense, Flatten
+from keras.models import Sequential
 from keras.optimizers import SGD
-
-''' Utworzenie unikalnego katalogu dla logów TensorBoard '''
-logdir = "./logs/cifar" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-
-''' Inicjalizacja callbacku TensorBoard do monitorowania procesu uczenia '''
-tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
+from keras.utils import to_categorical
+from matplotlib import pyplot
 
 ''' Definicja funkcji do ładowania i opcjonalnego wyświetlania danych CIFAR-10 '''
 def load_data(verbose=False):
@@ -75,7 +73,7 @@ trainX, testX = normalize_pixels(trainX, testX)
 model = define_model()
 
 ''' Trenowanie modelu na danych treningowych '''
-model.fit(trainX, trainY, epochs=50, batch_size=128, validation_data=(testX, testY), callbacks=tensorboard_callback)
+model.fit(trainX, trainY, epochs=50, batch_size=128, validation_split=0.2)
 
 ''' Ewaluacja modelu na danych testowych '''
 _, acc = model.evaluate(testX, testY, verbose=0)

@@ -1,22 +1,22 @@
+"""
+Autorzy
+Rutkowski Marcin - s12497
+Stankiewicz Kacper - s22619
+
+Full adder https://en.wikipedia.org/wiki/Adder_(electronics)
+"""
+
 import numpy as np
 import tensorflow as tf
 
-'''
-Tworzenie modelu sekwencyjnego przy użyciu Keras
-=> Warstwa wejściowa (Input); 
-=> Warstwa gęsta (Dense) z 10 neuronami i f-ją aktywacji ReLu;
-=> Warstwa gęsta (Dense) z 8 neuronami i f-ją aktywacji sigmoid
-'''
+'''Definicja modelu TensorFlow'''
 model = tf.keras.Sequential([
     tf.keras.layers.Input(shape=(3,)),
     tf.keras.layers.Dense(10, activation='relu'),
     tf.keras.layers.Dense(8, activation='sigmoid')
 ])
 
-'''
-Kompilacja modelu z optymalizatorem 'adam', funkcją straty 'binary_crossentropy'
-i metryką 'accuracy'.
-'''
+'''Kompilacja modelu'''
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
 ''' Definiowanie danych treningowych x_train w formie tablicy '''
