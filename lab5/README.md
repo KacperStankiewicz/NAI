@@ -53,5 +53,6 @@ Osiągnięcie dokładności na poziome 100%  (epoka 1480 z 3000)
 
 Zakończenie programu
 
-![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/fac998d0-5a41-4204-9e3c-286ca11f73c1)
+![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/6f938d55-91fa-4d08-b1b3-939d6717b242)
+
 
