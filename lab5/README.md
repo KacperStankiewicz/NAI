@@ -39,3 +39,19 @@ Wykonanie programu
 
 ![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/7d4c8d70-c8e4-424f-a95a-b9314d3a0660)
 
+Full adder
+
+Wykonanie 
+
+Pierwsze 10 epok 
+
+![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/8a78794e-eeb0-4b52-81d2-5c610c059040)
+
+Osiągnięcie dokładności na poziome 100%  (epoka 1480 z 3000)
+
+![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/b9e763ed-c065-455f-a357-2fa143ad2c7b)
+
+Zakończenie programu
+
+![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/fac998d0-5a41-4204-9e3c-286ca11f73c1)
+
