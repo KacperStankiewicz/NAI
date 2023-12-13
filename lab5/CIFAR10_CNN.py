@@ -9,11 +9,13 @@ from keras.models import Sequential
 from keras.layers import Dropout, Conv2D, MaxPooling2D, Dense, Flatten
 from keras.optimizers import SGD
 
-
+''' Utworzenie unikalnego katalogu dla logów TensorBoard '''
 logdir = "./logs/cifar" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+
+''' Inicjalizacja callbacku TensorBoard do monitorowania procesu uczenia '''
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
 
-
+''' Definicja funkcji do ładowania i opcjonalnego wyświetlania danych CIFAR-10 '''
 def load_data(verbose=False):
     (trainX, trainY), (testX, testY) = cifar10.load_data()
 
@@ -30,7 +32,7 @@ def load_data(verbose=False):
 
     return trainX, trainY, testX, testY
 
-
+''' Definicja funkcja normalizującej pikseli '''
 def normalize_pixels(train, test):
     train_norm = train.astype('float32')
     test_norm = test.astype('float32')
@@ -40,7 +42,7 @@ def normalize_pixels(train, test):
 
     return train_norm, test_norm
 
-
+''' Funkcja definiująca model sieci konwolucyjnej (CNN) '''
 def define_model():
     model = Sequential()
     model.add(
@@ -65,12 +67,18 @@ def define_model():
 
     return model
 
-
+''' Ładowanie i przygotowanie danych CIFAR-10 '''
 trainX, trainY, testX, testY = load_data()
 trainX, testX = normalize_pixels(trainX, testX)
+
+''' Definiowanie i kompilacja modelu '''
 model = define_model()
 
+''' Trenowanie modelu na danych treningowych '''
 model.fit(trainX, trainY, epochs=50, batch_size=128, validation_data=(testX, testY), callbacks=tensorboard_callback)
 
+''' Ewaluacja modelu na danych testowych '''
 _, acc = model.evaluate(testX, testY, verbose=0)
+
+''' Wyświetlenie dokładności modelu '''
 print('> %.3f' % (acc * 100.0))
