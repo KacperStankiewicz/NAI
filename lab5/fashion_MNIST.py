@@ -6,18 +6,23 @@ from keras.datasets import fashion_mnist
 from keras.losses import SparseCategoricalCrossentropy
 from keras.optimizers import Adam
 
+''' Utworzenie unikalnego katalogu dla logów TensorBoard '''
 logdir = "./logs/fashion" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "_big"
+
+''' Inicjalizacja callbacku TensorBoard do monitorowania procesu uczenia '''
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
 
 class_names = []
 
-
+''' Definicja funkcji do ładowania danych Fashion MNIST '''
 def load_data(verbose=False):
     (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
-
+    
+    ''' Definicja nazw klas dla zbioru danych Fashion MNIST '''
     class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                    'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
+    ''' Opcjonalne wyświetlenie pierwszego obrazu ze zbioru treningowego '''
     if verbose:
         plt.figure()
         plt.imshow(train_images[0])
@@ -28,6 +33,7 @@ def load_data(verbose=False):
     return (train_images, train_labels), (test_images, test_labels)
 
 
+''' Definicja funkcji do normalizacji pikseli '''
 def normalize_pixels(train, test):
     train_norm = train.astype('float32')
     test_norm = test.astype('float32')
@@ -38,6 +44,7 @@ def normalize_pixels(train, test):
     return train_norm, test_norm
 
 
+''' Funkcja definiująca model sieci neuronowej '''
 def define_model():
     model = tf.keras.Sequential([
         tf.keras.layers.Flatten(input_shape=(28, 28)),
@@ -52,6 +59,7 @@ def define_model():
     return model
 
 
+''' Funkcja definiująca większy model sieci neuronowej '''
 def define_bigger_model():
     model = tf.keras.Sequential([
         tf.keras.layers.Flatten(input_shape=(28, 28)),
@@ -67,7 +75,16 @@ def define_bigger_model():
                   metrics=['accuracy'])
     return model
 
-
+'''
+Uruchomienie funkcji:
+1. Ładowanie danych MNIST
+2. Normalizacja pikseli
+3. Definiowanie i kompilacja większego modelu
+4. Trenowanie modelu
+5. Ewaluacja modelu na danych testowych
+6. Wyświetlenie dokładności modelu
+7. Wykonanie predykcji
+'''
 (train_images, train_labels), (test_images, test_labels) = load_data()
 
 train_images, test_images = normalize_pixels(train_images, test_images)
