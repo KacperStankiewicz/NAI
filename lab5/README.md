@@ -16,6 +16,14 @@
 ### Confussion matrix
 ![img_4.png](img_4.png)
 
+## DTree
+
+![image](https://github.com/KacperStankiewicz/NAI/assets/37616390/b573d9d8-f04e-4a67-82d7-487d77d9ecaf)
+
+## SVM
+
+![img_3.png](img_3.png)
+
 ## CIFAR10
 
 ### Wykonanie programu
