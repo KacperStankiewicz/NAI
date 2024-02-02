@@ -42,7 +42,7 @@ def run(episodes, is_training=True, render=False):
         q = pickle.load(f)
         f.close()
 
-    learning_rate_a = 0.09 # learning rate
+    learning_rate_a = 0.9 # learning rate
     discount_factor_g = 0.9 # gamma or discount rate. Near 0: more weight/reward placed on immediate state. Near 1: more on future state.
     epsilon = 1         # 1 = 100% random actions
     epsilon_decay_rate = 0.0001        # epsilon decay rate. 1/0.0001 = 10,000
@@ -93,5 +93,5 @@ def run(episodes, is_training=True, render=False):
 
 if __name__ == '__main__':
     # run(15000)
-    run(1000, is_training=False, render=False)
+    run(5, is_training=False, render=False)
 
